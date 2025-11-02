@@ -1,0 +1,39 @@
+{
+  "meta": { "id": "qset_complex_1" },
+  "events": [
+    {
+      "type": "shortest_path",
+      "id": 1,
+      "source": 0,
+      "target": 4,
+      "mode": "distance",
+      "constraints": { "forbidden_nodes": [], "forbidden_road_types": [] }
+    },
+
+    {
+      "type": "shortest_path",
+      "id": 2,
+      "source": 0,
+      "target": 5,
+      "mode": "distance",
+      "constraints": {
+        "forbidden_nodes": [],
+        "forbidden_road_types": ["primary","secondary","tertiary"]
+      }
+      
+    },
+
+    {
+      "type": "shortest_path",
+      "id": 3,
+      "source": 2,
+      "target": 9,
+      "mode": "distance",
+      "constraints": {
+        "forbidden_nodes": [5],
+        "forbidden_road_types": ["tertiary"]
+      }
+      
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+    "id": 1,
+    "possible": true,
+    "minimum_time/minimum_distance": 24.0,
+    "path": [
+        0,
+        5,
+        4
+    ]
+}
+{
+    "id": 2,
+    "possible": false,
+    "minimum_time/minimum_distance": "NaN",
+    "path": "NaN"
+}
+{
+    "id": 3,
+    "possible": true,
+    "minimum_time/minimum_distance": 22.0,
+    "path": [
+        2,
+        3,
+        9
+    ]
+}
