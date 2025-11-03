@@ -19,6 +19,7 @@ struct Edge{
     double average_time;
     std::vector<double>speed_profile;
     bool oneway;
+    bool isblocked=false;
     std::string road_type;
     Edge(int id,int u,int v,double length,double average_time,std::vector<double>speed_profile,bool oneway,std::string road_type)
     {
@@ -37,15 +38,19 @@ struct Edge{
     }
 };
 class Graph{
+
     private:
+    
     int nodes;
-    std::map<int,Node*>All_Nodes;
+    std::vector<Node*>All_Nodes;
     std::map<int,std::map<int,std::vector<Edge*>>>Network;
     std::map<int,Edge*>Roads;
+
     public:
     Graph(int nodes)
     {
         this->nodes=nodes;
+        this->All_Nodes=std::vector<Node*>(this->nodes);
     }
     void addNode(int id,double lat,double lon,std::vector<std::string> pois)
     {
@@ -53,7 +58,7 @@ class Graph{
     }
     bool addedge(int id,int u,int v,double length,double average_time,std::vector<double>speed_profile,bool oneway,std::string road_type)
     {
-        if(All_Nodes.find(u)==All_Nodes.end() || All_Nodes.find(v)==All_Nodes.end())
+        if(u>=nodes || v>=nodes || u<0 || v<0)
         {return false;
         }
         Edge* newedge=new Edge(id,u,v,length,average_time,speed_profile,oneway,road_type);
@@ -73,17 +78,9 @@ class Graph{
             return false;
         }
         auto& listedges=Network[Roads[id]->u][Roads[id]->v];
-        listedges.erase(find(listedges.begin(),listedges.end(),Roads[id]));
-        if(Roads[id]->oneway==false)
-        {
-            auto& listedges=Network[Roads[id]->v][Roads[id]->u];
-        listedges.erase(find(listedges.begin(),listedges.end(),Roads[id]));
+        listedges[find(listedges.begin(),listedges.end(),Roads[id])-listedges.begin()]->isblocked=true;
 
-        }
-        delete Roads[id];
-        Roads.erase(id);
         return true;
-        
     }
     void printedges()
     {
@@ -92,13 +89,16 @@ class Graph{
             (id_edge.second)->print();
         }
     }
-    bool modify_edge(int id,double length)
+    bool modify_edge(int id,double length=-1,double average_time=-1,std::vector<double>speed_profile={-1})
         {
             if(Roads.find(id) == Roads.end())
         {
             return false;
         }
-            Roads[id]->length=length;
+            Roads[id]->isblocked=false;
+            if(length>=0) Roads[id]->length=length;
+            if(average_time>=0) Roads[id]->average_time=average_time;
+            if(speed_profile.size()==0 || speed_profile[0]!=-1) Roads[id]->speed_profile=speed_profile;
             return true;
         }
     double measure(std::string mode,int id)
@@ -136,7 +136,7 @@ class Graph{
             {   if(presence[nodeedges.first] || isforbidden[nodeedges.first]) continue;
                 auto road_list=nodeedges.second;
                 for(auto edge: road_list)
-                {
+                {   if(edge->isblocked==true){continue;}
                     if( find(forbidden_road_types.begin(),forbidden_road_types.end(),edge->road_type)==forbidden_road_types.end() )
                     {
                         pq.push({-edge->length-measure[curr.second.first],{nodeedges.first,edge->id}});

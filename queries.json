@@ -1,11 +1,16 @@
 {
   "meta": { "id": "qset_complex_1" },
   "events": [
+{ 
+"type": "remove_edge",
+"edge_id": 100
+},
+
     {
       "type": "shortest_path",
       "id": 1,
       "source": 0,
-      "target": 4,
+      "target": 1,
       "mode": "distance",
       "constraints": { "forbidden_nodes": [], "forbidden_road_types": [] }
     },
@@ -34,6 +39,19 @@
         "forbidden_road_types": ["tertiary"]
       }
       
+    },
+    { 
+"type": "modify_edge",
+"edge_id": 100,
+"patch": { }
+},
+{
+      "type": "shortest_path",
+      "id": 1,
+      "source": 0,
+      "target": 1,
+      "mode": "distance",
+      "constraints": { "forbidden_nodes": [], "forbidden_road_types": [] }
     }
   ]
 }
