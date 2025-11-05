@@ -1,48 +1,46 @@
 {
-    "done": true,
-    "processing_time": 0.009485
-}
-{
-    "id": 1,
-    "possible": true,
-    "minimum_time/minimum_distance": 44.0,
-    "path": [
-        0,
-        5,
-        6,
-        7,
-        2,
-        1
-    ],
-    "processing_time": 0.071687
-}
-{
-    "id": 2,
-    "possible": false,
-    "processing_time": 0.021754
-}
-{
-    "id": 3,
-    "possible": true,
-    "minimum_time/minimum_distance": 22.0,
-    "path": [
-        2,
-        3,
-        9
-    ],
-    "processing_time": 0.046582
-}
-{
-    "done": true,
-    "processing_time": 0.006548
-}
-{
-    "id": 1,
-    "possible": true,
-    "minimum_time/minimum_distance": 5.0,
-    "path": [
-        0,
-        1
-    ],
-    "processing_time": 0.018179
+    "meta": {
+        "id": "qset_time_phase1"
+    },
+    "results": [
+        {
+            "id": 1,
+            "done": true,
+            "processing_time": 0.005827
+        },
+        {
+            "id": 1,
+            "possible": false,
+            "processing_time": 0.039823
+        },
+        {
+            "id": 2,
+            "possible": false,
+            "processing_time": 0.011963
+        },
+        {
+            "id": 1,
+            "done": true,
+            "processing_time": 0.006815
+        },
+        {
+            "id": 3,
+            "possible": true,
+            "minimum_time/minimum_distance": 24.3,
+            "path": [
+                1,
+                2,
+                8,
+                9,
+                10,
+                11
+            ],
+            "processing_time": 0.037519
+        },
+        {
+            "id": 4,
+            "possible": false,
+            "processing_time": 0.013739
+        }
+    ]
 }

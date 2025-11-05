@@ -1,4 +1,6 @@
-#include<bits/stdc++.h>
+#include<map>
+#include<vector>
+#include<queue>
 // enum ROADTUY
 struct Node{
     int id;
@@ -71,16 +73,11 @@ class Graph{
         Roads[id]=newedge;
         return true;
     }
-    bool removeedge(int id)
+    void removeedge(int id)
     {   
-        if(Roads.find(id) == Roads.end())
-        {
-            return false;
-        }
+        if(Roads.find(id) == Roads.end()) return;
         auto& listedges=Network[Roads[id]->u][Roads[id]->v];
         listedges[find(listedges.begin(),listedges.end(),Roads[id])-listedges.begin()]->isblocked=true;
-
-        return true;
     }
     void printedges()
     {
@@ -89,40 +86,27 @@ class Graph{
             (id_edge.second)->print();
         }
     }
-    bool modify_edge(int id,double length=-1,double average_time=-1,std::vector<double>speed_profile={-1})
+    void modify_edge(int id,double length=-1,double average_time=-1,std::vector<double>speed_profile={-1},std::string road_type="")
         {
-            if(Roads.find(id) == Roads.end())
-        {
-            return false;
-        }
+            if(Roads.find(id) == Roads.end())return;
             Roads[id]->isblocked=false;
             if(length>=0) Roads[id]->length=length;
             if(average_time>=0) Roads[id]->average_time=average_time;
-            if(speed_profile.size()==0 || speed_profile[0]!=-1) Roads[id]->speed_profile=speed_profile;
-            return true;
+            if(speed_profile.size()!=0 ) Roads[id]->speed_profile=speed_profile;
+            if(road_type!="") Roads[id]->road_type=road_type;
+            return;
         }
-    double measure(std::string mode,int id)
-    {
-        if(mode=="distance")
-        {
-            return Roads[id]->length;
-        }
-        if(mode=="time")
-        {
-            return Roads[id]->average_time;
-        }
-        
-    }
-    bool shortest_path(std::string mode,int src,int target,double& output,std::vector<int>&path,std::vector<int> forbidden_nodes={},std::vector<std::string> forbidden_road_types={})
+
+    bool shortest_distance_path(int src,int target,double& output,std::vector<int>&path,std::vector<int> forbidden_nodes={},std::vector<std::string> forbidden_road_types={})
     {
         std::priority_queue<std::pair<double,std::pair<int,int>>>pq;
-        std::vector<bool>presence(nodes);
-        std::vector<bool>isforbidden(nodes);
+        std::vector<bool>presence(nodes),isforbidden(nodes);
         std::vector<double>measure(nodes);
-        for(int id:forbidden_nodes)
-        {isforbidden[id]=true;
-        }
-        pq.push({0,{src,-1}});std::map<int,int>travelid;
+        std::map<int,int>travelid;
+        for(int id:forbidden_nodes) isforbidden[id]=true;
+
+        pq.push({0,{src,-1}});
+
         while(!pq.empty())
         {
             std::pair<double,std::pair<int,int>> curr=pq.top();pq.pop();
@@ -145,12 +129,13 @@ class Graph{
                 }
             }
         }
+
         if(presence[target]==false || isforbidden[target]==true){return false;}
         output=measure[target];
         path.push_back(target);
         while(target!=src)
         {
-            target=Roads[travelid[target]]->u+Roads[travelid[target]]->v-target;
+            target=Roads[travelid[target]]->u + Roads[travelid[target]]->v - target;
             path.push_back(target);
 
         }
@@ -158,5 +143,77 @@ class Graph{
 
         return true;
     }
+    double time_taken(Edge*& road,double currtime)
+    {   
+        if(road->speed_profile.size()==0) return road->average_time;
+        double time=0;
+        int curr_time_interval=currtime/15.0;
+        double delta_t=15.0-(currtime-curr_time_interval*15.0);
+        double treq=(road->length)/(road->speed_profile[curr_time_interval]);
+        if(treq<delta_t)
+        {   return treq;
+        }
+        time=delta_t;
+        double distance_remaining=road->length-delta_t*(road->speed_profile[curr_time_interval]);
+        for(int i=curr_time_interval+1;;(i++,i%=96))
+        {
+            if(15.0*(road->speed_profile[i])>distance_remaining)
+            {
+                time+=(distance_remaining)/road->speed_profile[i];
+                break;
+            }
+            else{
+                time+=15;
+                distance_remaining-=15.0*road->speed_profile[i];
+            }
+        }
+        return time;
+    }
+    bool shortest_time_path(int src,int target,double& output,std::vector<int>&path,std::vector<int> forbidden_nodes={},std::vector<std::string> forbidden_road_types={})
+    {
+        std::priority_queue<std::pair<double,std::pair<int,int>>>pq;
+        std::vector<bool>presence(nodes),isforbidden(nodes);
+        std::vector<double>measure(nodes);
+        std::map<int,int>travelid;
+        for(int id:forbidden_nodes) isforbidden[id]=true;
+
+        pq.push({0,{src,-1}});
+
+        while(!pq.empty())
+        {
+            std::pair<double,std::pair<int,int>> curr=pq.top();pq.pop();
+            if(presence[curr.second.first]){continue;}
+            presence[curr.second.first]=true;
+            measure[curr.second.first]=-curr.first;
+            travelid[curr.second.first]=curr.second.second;
+            if(curr.second.first==target){break;}
+            for(auto nodeedges:Network[curr.second.first])
+            {   if(presence[nodeedges.first] || isforbidden[nodeedges.first]) continue;
+                auto road_list=nodeedges.second;
+                for(auto edge: road_list)
+                {   if(edge->isblocked==true){continue;}
+                    if( find(forbidden_road_types.begin(),forbidden_road_types.end(),edge->road_type)==forbidden_road_types.end() )
+                    {
+                        pq.push({-time_taken(edge,measure[curr.second.first])-measure[curr.second.first],{nodeedges.first,edge->id}});
+                        
+                    }
+                }
+            }
+        }
+
+        if(presence[target]==false || isforbidden[target]==true){return false;}
+        output=measure[target];
+        path.push_back(target);
+        while(target!=src)
+        {
+            target=Roads[travelid[target]]->u + Roads[travelid[target]]->v - target;
+            path.push_back(target);
+
+        }
+        reverse(path.begin(),path.end());
+
+        return true;
+    }
+    
     
 };

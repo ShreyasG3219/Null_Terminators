@@ -1,57 +1,62 @@
 {
-  "meta": { "id": "qset_complex_1" },
+  "meta": { "id": "qset_time_phase1" },
   "events": [
-{ 
-"type": "remove_edge",
-"edge_id": 100
-},
-
+    {
+      "id":1,
+      "type": "remove_edge",
+      "edge_id": 104
+    },
     {
       "type": "shortest_path",
       "id": 1,
       "source": 0,
-      "target": 1,
-      "mode": "distance",
-      "constraints": { "forbidden_nodes": [], "forbidden_road_types": [] }
+      "target": 5,
+      "mode": "time",
+      "constraints": {
+        "forbidden_nodes": [],
+        "forbidden_road_types": ["highway"]
+      }
     },
-
     {
       "type": "shortest_path",
       "id": 2,
       "source": 0,
-      "target": 5,
-      "mode": "distance",
+      "target": 9,
+      "mode": "time",
       "constraints": {
-        "forbidden_nodes": [],
-        "forbidden_road_types": ["primary","secondary","tertiary"]
+        "forbidden_nodes": [3],
+        "forbidden_road_types": ["primary"]
       }
-      
     },
-
+    {
+      "id":1,
+      "type": "modify_edge",
+      "edge_id": 101,
+      "patch": {
+        "average_time": 5.0
+      }
+    },
     {
       "type": "shortest_path",
       "id": 3,
-      "source": 2,
-      "target": 9,
-      "mode": "distance",
+      "source": 1,
+      "target": 11,
+      "mode": "time",
       "constraints": {
-        "forbidden_nodes": [5],
-        "forbidden_road_types": ["tertiary"]
+        "forbidden_nodes": [],
+        "forbidden_road_types": []
       }
-      
     },
-    { 
-"type": "modify_edge",
-"edge_id": 100,
-"patch": { }
-},
-{
+    {
       "type": "shortest_path",
-      "id": 1,
+      "id": 4,
       "source": 0,
-      "target": 1,
-      "mode": "distance",
-      "constraints": { "forbidden_nodes": [], "forbidden_road_types": [] }
+      "target": 10,
+      "mode": "time",
+      "constraints": {
+        "forbidden_nodes": [2, 4],
+        "forbidden_road_types": ["secondary"]
+      }
     }
   ]
 }

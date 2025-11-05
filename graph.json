@@ -1,37 +1,36 @@
 {
   "meta": {
-    "id": "sample_testcase_2",
-    "nodes": 10,
-    "description": "More complex 10-node road network graph"
+    "id": "complex_graph_time_phase1",
+    "nodes": 12,
+    "description": "Complex city network with multiple road types for time-based routing (Phase 1 format)"
   },
-
   "nodes": [
-    { "id": 0, "lat": 19.071, "lon": 72.868, "pois": ["Restaurant", "Mall"] },
-    { "id": 1, "lat": 19.072, "lon": 72.869, "pois": ["Hospital", "School"] },
-    { "id": 2, "lat": 19.073, "lon": 72.871, "pois": ["Park"] },
-    { "id": 3, "lat": 19.074, "lon": 72.872, "pois": ["Temple", "Cafe"] },
-    { "id": 4, "lat": 19.075, "lon": 72.870, "pois": ["Restaurant"] },
-    { "id": 5, "lat": 19.076, "lon": 72.873, "pois": ["Hospital"] },
-    { "id": 6, "lat": 19.077, "lon": 72.874, "pois": ["Cinema", "Cafe"] },
-    { "id": 7, "lat": 19.078, "lon": 72.875, "pois": ["Mall"] },
-    { "id": 8, "lat": 19.079, "lon": 72.876, "pois": ["Restaurant", "Gym"] },
-    { "id": 9, "lat": 19.080, "lon": 72.877, "pois": ["University", "Library"] }
+    { "id": 0, "lat": 19.0700, "lon": 72.8700, "pois": ["Restaurant", "Hospital"] },
+    { "id": 1, "lat": 19.0750, "lon": 72.8800, "pois": ["Mall"] },
+    { "id": 2, "lat": 19.0800, "lon": 72.8850, "pois": ["Park"] },
+    { "id": 3, "lat": 19.0850, "lon": 72.8900, "pois": [] },
+    { "id": 4, "lat": 19.0900, "lon": 72.8950, "pois": ["School"] },
+    { "id": 5, "lat": 19.0950, "lon": 72.9000, "pois": ["Hospital"] },
+    { "id": 6, "lat": 19.1000, "lon": 72.9050, "pois": [] },
+    { "id": 7, "lat": 19.1050, "lon": 72.9100, "pois": ["Restaurant"] },
+    { "id": 8, "lat": 19.1100, "lon": 72.9150, "pois": [] },
+    { "id": 9, "lat": 19.1150, "lon": 72.9200, "pois": ["Gas Station"] },
+    { "id": 10, "lat": 19.1200, "lon": 72.9250, "pois": ["Temple"] },
+    { "id": 11, "lat": 19.1250, "lon": 72.9300, "pois": ["Market"] }
   ],
-
   "edges": [
-    { "id": 100, "u": 0, "v": 1, "length": 5, "average_time": 3.2, "speed_profile": [40, 42, 38, 45], "oneway": false, "road_type": "primary" },
-    { "id": 101, "u": 1, "v": 2, "length": 7, "average_time": 4.0, "speed_profile": [35, 37, 39, 41], "oneway": false, "road_type": "secondary" },
-    { "id": 102, "u": 2, "v": 3, "length": 6, "average_time": 4.5, "speed_profile": [42, 40, 43, 44], "oneway": false, "road_type": "primary" },
-    { "id": 103, "u": 3, "v": 4, "length": 10, "average_time": 6.5, "speed_profile": [38, 40, 42, 41], "oneway": false, "road_type": "secondary" },
-    { "id": 104, "u": 4, "v": 5, "length": 9, "average_time": 5.8, "speed_profile": [37, 36, 38, 40], "oneway": false, "road_type": "primary" },
-    { "id": 105, "u": 5, "v": 6, "length": 4, "average_time": 3.1, "speed_profile": [45, 47, 46, 48], "oneway": false, "road_type": "primary" },
-    { "id": 106, "u": 6, "v": 7, "length": 5, "average_time": 3.8, "speed_profile": [39, 41, 42, 40], "oneway": false, "road_type": "secondary" },
-    { "id": 107, "u": 7, "v": 8, "length": 8, "average_time": 5.2, "speed_profile": [36, 37, 39, 38], "oneway": false, "road_type": "primary" },
-    { "id": 108, "u": 8, "v": 9, "length": 11, "average_time": 6.8, "speed_profile": [42, 43, 41, 44], "oneway": false, "road_type": "primary" },
-    { "id": 109, "u": 0, "v": 5, "length": 15, "average_time": 9.3, "speed_profile": [35, 37, 38, 36], "oneway": false, "road_type": "tertiary" },
-    { "id": 110, "u": 2, "v": 7, "length": 13, "average_time": 8.0, "speed_profile": [40, 41, 42, 43], "oneway": false, "road_type": "primary" },
-    { "id": 111, "u": 1, "v": 8, "length": 14, "average_time": 8.6, "speed_profile": [37, 38, 39, 40], "oneway": false, "road_type": "secondary" },
-    { "id": 112, "u": 3, "v": 9, "length": 16, "average_time": 10.2, "speed_profile": [33, 35, 34, 36], "oneway": false, "road_type": "primary" },
-    { "id": 113, "u": 0, "v": 9, "length": 20, "average_time": 12.5, "speed_profile": [30, 32, 31, 33], "oneway": false, "road_type": "highway" }
+    { "id": 100, "u": 0, "v": 1, "length": 120.0, "average_time": 4.5, "speed_profile": [], "oneway": false, "road_type": "primary" },
+    { "id": 101, "u": 1, "v": 2, "length": 80.0, "average_time": 3.5, "speed_profile": [], "oneway": false, "road_type": "secondary" },
+    { "id": 102, "u": 2, "v": 3, "length": 60.0, "average_time": 2.0, "speed_profile": [], "oneway": false, "road_type": "residential" },
+    { "id": 103, "u": 3, "v": 4, "length": 90.0, "average_time": 4.0, "speed_profile": [], "oneway": false, "road_type": "primary" },
+    { "id": 104, "u": 4, "v": 5, "length": 150.0, "average_time": 6.0, "speed_profile": [], "oneway": true, "road_type": "highway" },
+    { "id": 105, "u": 1, "v": 6, "length": 200.0, "average_time": 10.0, "speed_profile": [], "oneway": false, "road_type": "secondary" },
+    { "id": 106, "u": 6, "v": 7, "length": 90.0, "average_time": 3.0, "speed_profile": [], "oneway": false, "road_type": "residential" },
+    { "id": 107, "u": 7, "v": 8, "length": 110.0, "average_time": 3.5, "speed_profile": [], "oneway": false, "road_type": "tertiary" },
+    { "id": 108, "u": 8, "v": 9, "length": 95.0, "average_time": 2.8, "speed_profile": [], "oneway": false, "road_type": "primary" },
+    { "id": 109, "u": 9, "v": 10, "length": 130.0, "average_time": 5.0, "speed_profile": [], "oneway": false, "road_type": "secondary" },
+    { "id": 110, "u": 10, "v": 11, "length": 140.0, "average_time": 5.5, "speed_profile": [], "oneway": false, "road_type": "highway" },
+    { "id": 111, "u": 4, "v": 9, "length": 210.0, "average_time": 7.5, "speed_profile": [], "oneway": false, "road_type": "primary" },
+    { "id": 112, "u": 2, "v": 8, "length": 170.0, "average_time": 6.0, "speed_profile": [], "oneway": true, "road_type": "secondary" }
   ]
 }
